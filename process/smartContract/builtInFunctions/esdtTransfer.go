@@ -68,6 +68,8 @@ func (e *esdtTransfer) ProcessBuiltinFunction(
 	log.Trace("esdtTransfer", "sender", vmInput.CallerAddr, "receiver", vmInput.RecipientAddr, "value", value, "token", esdtTokenKey)
 
 	if !check.IfNil(acntSnd) {
+		log.Trace("esdtTransfer AcntSender", "rootHash", acntSnd.GetRootHash(), "address", acntSnd.AddressBytes())
+
 		// gas is paid only by sender
 		if vmInput.GasProvided < e.funcGasCost {
 			return nil, process.ErrNotEnoughGas
@@ -82,6 +84,8 @@ func (e *esdtTransfer) ProcessBuiltinFunction(
 
 	vmOutput := &vmcommon.VMOutput{GasRemaining: gasRemaining}
 	if !check.IfNil(acntDst) {
+		log.Trace("esdtTransfer AcntDst", "rootHash", acntDst.GetRootHash(), "address", acntDst.AddressBytes())
+
 		err := e.addToESDTBalance(acntDst, esdtTokenKey, value)
 		if err != nil {
 			return nil, err

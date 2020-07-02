@@ -64,7 +64,12 @@ func (tdaw *TrackableDataTrie) RetrieveValue(key []byte) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	log.Trace("retrieve value from trie", "key", key, "value", value)
+
+	rootHash, err := tdaw.tr.Root()
+	if err != nil {
+		log.Error("retrieve value error", err)
+	}
+	log.Trace("retrieve value from trie", "rootHash", rootHash, "key", key, "value", value)
 	value, _ = trimValue(value, tailLength)
 
 	//got the value, put it originalData cache as the next fetch will run faster

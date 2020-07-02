@@ -228,7 +228,7 @@ func (tr *patriciaMerkleTrie) Commit() error {
 	tr.oldHashes = make([][]byte, 0)
 
 	if log.GetLevel() == logger.LogTrace {
-		log.Trace("started committing trie", "trie", tr.root.getHash())
+		log.Trace("started committing trie", "trie", tr.String())
 	}
 
 	err = tr.root.commit(false, 0, tr.maxTrieLevelInMemory, tr.trieStorage.Database(), tr.trieStorage.Database())
